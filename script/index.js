@@ -10,7 +10,7 @@ function displayCategories(categories) {
   for (let cat of categories) {
     const categoryDiv = document.createElement("div");
     categoryDiv.innerHTML = `
-    <button class="btn btn-sm btn-accent font-bold">${cat.category}</button>
+    <button id='btn-${cat.category_id}' onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm  font-bold hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
  
  `;
     categoryContainer.append(categoryDiv);
@@ -26,10 +26,22 @@ function loadVideos() {
 }
 
 const displayVideos = (videos) => {
+  const videosContainer = document.getElementById("videos");
+  videosContainer.innerHTML = ``;
+
+if(videos.length === 0){
+  videosContainer.innerHTML = `
+  <div class="flex flex-col justify-center items-center col-span-full">
+    <img src="Icon.png" alt="" class="w-[25%]">
+    <h1 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h1>
+</div>
+  `;
+
+}
+
   videos.forEach((video) => {
-    const videosContainer = document.getElementById("videos");
     const videoDiv = document.createElement("div");
-    videoDiv.classList.add('shadow-xl', 'rounded-lg')
+    videoDiv.classList.add("shadow-xl", "rounded-lg");
     videoDiv.innerHTML = `
     <figure class='relative'>
    <img src="${video.thumbnail}" alt="" class="w-full md:h-52 xl:h-68 2xl:h-60 md:w-full rounded-tl-lg rounded-tr-lg" />
@@ -48,10 +60,20 @@ const displayVideos = (videos) => {
     
    `;
     videosContainer.append(videoDiv);
-    console.log(video);
   });
 };
-loadVideos();
+
+const loadCategoryVideos = (id) => {
+  const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+        const clickedButton = document.getElementById(`btn-${id}`)
+        clickedButton.classList.add('active')
+        displayVideos(data.category)
+    });
+};
 
 // {
 //     "category_id": "1003",

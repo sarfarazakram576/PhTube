@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PH Tube</title>
 
-<style>
-    .active{
-        background-color: #FF1F3D;
+    <style>
+      .active {
+        background-color: #ff1f3d;
         color: white;
-    }
-</style>
+      }
+    </style>
 
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
@@ -28,7 +28,25 @@
           <img src="Logo.png" alt="" class="w-[60%] md:w-[80%]" />
         </div>
         <div>
-          <button class="btn  font-bold mr-4 md:mr-0 hover:bg-[#FF1F3D] hover:text-white">Sort by View</button>
+          <label class="input">
+            <svg
+              class="h-[1em] opacity-50"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <g
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2.5"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg>
+            <input id="searchInput" type="search" required placeholder="Search" />
+          </label>
         </div>
         <div>
           <button class="btn bg-[#FF1F3D] font-bold text-white">Blog</button>
@@ -41,21 +59,41 @@
       class="flex justify-center items-center mt-6 gap-4"
     >
       <div>
-        <button id="allBtn" class="btn btn-sm font-bold " onclick="loadVideos()">All</button>
+        <button id="allBtn" class="btn btn-sm font-bold" onclick="loadVideos()">
+          All
+        </button>
       </div>
     </nav>
 
-
     <main class="w-11/12 mx-auto mt-10">
-<section id="videos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-8 gap-x-4 md:container mx-auto">
-<div class="flex flex-col justify-center items-center col-span-full">
-    <img src="Icon.png" alt="" class="w-[25%]">
-    <h1 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h1>
-</div>
-</section>
+      <section id="loader" class="text-center py-16 hidden">
+        <span class="loading loading-dots loading-xl" ></span>
+      </section>
+      <section
+        id="videos"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-8 gap-x-4 md:container mx-auto"
+      >
+        <div class="flex flex-col justify-center items-center col-span-full">
+          <img src="Icon.png" alt="" class="w-[25%]" />
+          <h1 class="text-2xl font-bold">
+            Oops!! Sorry, There is no content here
+          </h1>
+        </div>
+      </section>
+
+      <dialog id="videoDetails" class="modal">
+        <div class="modal-box">
+          <form method="dialog">
+            <button
+              class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </button>
+          </form>
+          <div id="detailsContainer"></div>
+        </div>
+      </dialog>
     </main>
-
-
 
     <script src="script/index.js"></script>
   </body>
